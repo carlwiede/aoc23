@@ -1,4 +1,4 @@
-module ReadInput
+module ReadInt
 
 export read_input
 
