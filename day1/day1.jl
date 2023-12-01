@@ -3,16 +3,12 @@ lines = ReadString.read_input()
 
 function part1(input::Vector{String})::Int
     return mapreduce(
-        line -> parse(
-            Int,
-            mapreduce(
-                l -> match(r"\d", l).match, 
-                *,
-                [line, reverse(line)]
-            )
-        ),
+        line -> parse(Int, "$(line[1])$(line[end])"),
         +, 
-        input
+        map(
+            line -> filter(c -> isdigit(c), line),
+            input
+        )
     )
 end
 
