@@ -1,71 +1,43 @@
 include("../ReadString.jl")
-input = ReadString.read_input()
+lines = ReadString.read_input()
 
-function getValue(input::String)::Int
-
-    firstStringValue = 0
-    firstStringPos = 1000
-
-    lastStringValue = 0
-    lastStringPos = 0
-
-    firstDigit = 0
-    firstDigitPos = 1000
-
-    lastDigit = 0
-    lastDigitPos = 0
-
-    strNumbers = ["one", "two", "three", "four", "five", "six", "seven", "eight", "nine"]
-
-    for (index, str) in enumerate(strNumbers)
-        find = findfirst(str, input)
-        if find !== nothing && first(find) < firstStringPos
-            firstStringValue = index
-            firstStringPos = first(find)
-        end
-    end
-
-    for (index, str) in enumerate(strNumbers)
-        find = findlast(str, input)
-        if find !== nothing && first(find) > lastStringPos
-            lastStringValue = index
-            lastStringPos = first(find)
-        end
-    end
-
-    for (index, ch) in enumerate(input)
-        if (ch > '0' && ch <= '9')
-            firstDigitPos = index
-            firstDigit = ch
-            break
-        end
-    end
-
-    for (index, ch) in enumerate(input)
-        if (ch > '0' && ch <= '9')
-            lastDigitPos = index
-            lastDigit = ch
-        end
-    end
-
-    firstValue = 0
-    lastValue = 0
-
-    if firstDigitPos < firstStringPos
-        firstValue = parse(Int, firstDigit)
-    else
-        firstValue = firstStringValue
-    end
-
-    if lastDigitPos > lastStringPos
-        lastValue = parse(Int, lastDigit)
-    else
-        lastValue = lastStringValue
-    end
-
-    valueStr = "$firstValue$lastValue"
-    return parse(Int, valueStr)
-
+function part1(input::Vector{String})::Int
+    return mapreduce(
+        line -> parse(
+            Int,
+            mapreduce(
+                l -> match(r"\d", l).match, 
+                *,
+                [line, reverse(line)]
+            )
+        ),
+        +, 
+        input
+    )
 end
 
-println(mapreduce(x->getValue(x), +, input))
+function part2(input::Vector{String})::Int
+    rep = [
+        ("one","one1one"),
+        ("two","two2two"),
+        ("three","three3three"),
+        ("four","four4four"),
+        ("five","five5five"),
+        ("six","six6six"),
+        ("seven","seven7seven"),
+        ("eight","eight8eight"),
+        ("nine","nine9nine"),
+    ]
+    return part1(
+        map(
+            line -> foldl(
+                (s,p) -> replace(s, p[1] => p[2]),
+                rep, init=line
+            ),
+            input
+        )
+    )
+end
+
+println(part1(lines))
+println(part2(lines))
