@@ -11,20 +11,17 @@ end
 
 function find_start(time, distance)
     low, high = 1, time
-
     while low < high
         mid = (low + high) ÷ 2
-        a = mid
-
-        if a * (time - a) > distance
-            if (a-1) * (time - (a-1)) <= distance
-               low = a
-               break
+        if mid * (time - mid) > distance
+            if (mid-1) * (time - (mid-1)) <= distance
+                low = mid
+                break
             end
             high = mid
         else
-            if (a+1) * (time - (a+1)) > distance
-                low = a+1
+            if (mid+1) * (time - (mid+1)) > distance
+                low = mid+1
                 break
             end
             low = mid + 1
@@ -36,26 +33,22 @@ end
 
 function find_end(time, distance)
     low, high = 1, time
-
     while low < high
         mid = (low + high) ÷ 2
-        a = mid
-
-        if a * (time - a) > distance
-            if (a+1) * (time - (a+1)) <= distance
-               low = a
-               break
+        if mid * (time - mid) > distance
+            if (mid+1) * (time - (mid+1)) <= distance
+                low = mid
+                break
             end
             low = mid + 1
         else
-            if (a-1) * (time - (a-1)) > distance
-                low = a-1
+            if (mid-1) * (time - (mid-1)) > distance
+                low = mid-1
                 break
             end
             high = mid
         end
     end
-
     return low
 end
 
@@ -72,7 +65,7 @@ end
 function part2(input::Vector{String})::Int
     time_list = get_filtered_line2(input[1])
     dist_list = get_filtered_line2(input[2])
-    return reduce(*, get_ways_to_win(t, d) for (t, d) in zip(time_list, dist_list))
+    return get_ways_to_win(time_list[1], dist_list[1])
 end
 
 @show part1(lines)
