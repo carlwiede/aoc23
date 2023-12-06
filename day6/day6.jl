@@ -9,51 +9,12 @@ function get_filtered_line2(line)
     return parse(Int, join(string.(map(x -> parse(Int, x), filter(c -> c != "", split(last(split(line, ":")), " "))))))
 end
 
-function find_start(time, distance)
-    low, high = 1, time
-    while low < high
-        mid = (low + high) ÷ 2
-        if mid * (time - mid) > distance
-            if (mid-1) * (time - (mid-1)) <= distance
-                low = mid
-                break
-            end
-            high = mid
-        else
-            if (mid+1) * (time - (mid+1)) > distance
-                low = mid+1
-                break
-            end
-            low = mid + 1
-        end
-    end
-
-    return low
-end
-
-function find_end(time, distance)
-    low, high = 1, time
-    while low < high
-        mid = (low + high) ÷ 2
-        if mid * (time - mid) > distance
-            if (mid+1) * (time - (mid+1)) <= distance
-                low = mid
-                break
-            end
-            low = mid + 1
-        else
-            if (mid-1) * (time - (mid-1)) > distance
-                low = mid-1
-                break
-            end
-            high = mid
-        end
-    end
-    return low
-end
-
 function get_ways_to_win(time, distance)
-    return find_end(time, distance) - find_start(time, distance) + 1
+    a = -(-time/2)
+    b = sqrt((-time/2)^2-distance)
+    x1 = a + b
+    x2 = a - b
+    return Int(ceil(x1)) - Int(floor(x2)) - 1
 end
 
 function part1(input::Vector{String})::Int
