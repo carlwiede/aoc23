@@ -9,18 +9,58 @@ function get_filtered_line2(line)
     return parse(Int, join(string.(map(x -> parse(Int, x), filter(c -> c != "", split(last(split(line, ":")), " "))))))
 end
 
-function get_ways_to_win(time, distance)
-    a = 0
-    ways_to_win = 0
+function find_start(time, distance)
+    low, high = 1, time
 
-    for t in 1:time
-        a = t
-        if a * (time - t) > distance
-            ways_to_win += 1
+    while low < high
+        mid = (low + high) ÷ 2
+        a = mid
+
+        if a * (time - a) > distance
+            if (a-1) * (time - (a-1)) <= distance
+               low = a
+               break
+            end
+            high = mid
+        else
+            if (a+1) * (time - (a+1)) > distance
+                low = a+1
+                break
+            end
+            low = mid + 1
         end
     end
 
-    return ways_to_win
+    return low
+end
+
+function find_end(time, distance)
+    low, high = 1, time
+
+    while low < high
+        mid = (low + high) ÷ 2
+        a = mid
+
+        if a * (time - a) > distance
+            if (a+1) * (time - (a+1)) <= distance
+               low = a
+               break
+            end
+            low = mid + 1
+        else
+            if (a-1) * (time - (a-1)) > distance
+                low = a-1
+                break
+            end
+            high = mid
+        end
+    end
+
+    return low
+end
+
+function get_ways_to_win(time, distance)
+    return find_end(time, distance) - find_start(time, distance) + 1
 end
 
 function part1(input::Vector{String})::Int
