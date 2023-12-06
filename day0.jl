@@ -9,5 +9,5 @@ function part2(input::Vector{String})::Int
     return 0
 end
 
-println(part1(lines))
-println(part2(lines))
+@show part1(lines)
+@show part2(lines)
