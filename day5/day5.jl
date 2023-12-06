@@ -95,5 +95,5 @@ function part2(input::Vector{String})::Int
         return minimum(mini)
 end
 
-#println(part1(lines))
+println(part1(lines))
 println(part2(lines))
