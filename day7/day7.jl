@@ -53,20 +53,8 @@ function hand_is_better1(hand1, hand2)
 end
 
 function part1(input::Vector{String})::Int
-    sorted_hands = []
-    for line in input
-        fmt_hand = (split(line, " ")[1], parse(Int, split(line, " ")[2]))
-        ins_idx = 1
-        for hand in sorted_hands
-            if !hand_is_better1(fmt_hand, hand)
-                break
-            else
-                ins_idx += 1
-            end
-        end
-        insert!(sorted_hands, ins_idx, fmt_hand)
-    end
-    ranked_list = [(i, hand[2]) for (i, hand) in enumerate(sorted_hands)]    
+    formatted_hands = [(split(line, " ")[1], parse(Int, split(line, " ")[2])) for line in input]
+    ranked_list = [(i, hand[2]) for (i, hand) in enumerate(reverse(sort(formatted_hands, lt=hand_is_better1)))]
     return mapreduce(hand -> hand[1] * hand[2], +, ranked_list)
 end
 
@@ -151,20 +139,8 @@ function hand_is_better2(hand1, hand2)
 end
 
 function part2(input::Vector{String})::Int
-    sorted_hands = []
-    for line in input
-        fmt_hand = (split(line, " ")[1], parse(Int, split(line, " ")[2]))
-        ins_idx = 1
-        for hand in sorted_hands
-            if !hand_is_better2(fmt_hand, hand)
-                break
-            else
-                ins_idx += 1
-            end
-        end
-        insert!(sorted_hands, ins_idx, fmt_hand)
-    end
-    ranked_list = [(i, hand[2]) for (i, hand) in enumerate(sorted_hands)]    
+    formatted_hands = [(split(line, " ")[1], parse(Int, split(line, " ")[2])) for line in input]
+    ranked_list = [(i, hand[2]) for (i, hand) in enumerate(reverse(sort(formatted_hands, lt=hand_is_better2)))]
     return mapreduce(hand -> hand[1] * hand[2], +, ranked_list)
 end
 
