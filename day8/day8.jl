@@ -25,13 +25,6 @@ function part1(input::Vector{String})::Int
     return steps
 end
 
-function are_all_nodes_z(nodes)
-    if length(filter(n -> endswith(n, "Z"), nodes)) > 3
-        @show length(nodes), length(filter(n -> endswith(n, "Z"), nodes))
-    end
-    return length(nodes) == length(filter(n -> endswith(n, "Z"), nodes))
-end
-
 function part2(input::Vector{String})::Int
     directions = filter(d -> d != '\r', input[1])
     nodes = Dict{String, Tuple{String, String}}()
