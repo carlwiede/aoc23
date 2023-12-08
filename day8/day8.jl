@@ -37,7 +37,7 @@ function part2(input::Vector{String})::Int
     nodes = Dict{String, Tuple{String, String}}()
 
     for line in input[3:end]
-        nodes[split(line, " = ")[1]] = (string(split(split(line, ", ")[1], "(")[2]), string(split(split(line, ", ")[2], ")")[1]))
+        nodes[split(line, " = ")[1]] = (split(split(line, ", ")[1], "(")[2], split(split(line, ", ")[2], ")")[1])
     end
 
     current_nodes = collect(filter(n -> endswith(n, "A"), keys(nodes)))
