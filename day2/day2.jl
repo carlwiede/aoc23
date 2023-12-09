@@ -1,5 +1,5 @@
-include("../ReadString.jl")
-lines = ReadString.read_input()
+include("../ReadFile.jl")
+lines = ReadFile.read_input()
 
 maxnums = [("red", 12), ("green", 13), ("blue", 14)]
 

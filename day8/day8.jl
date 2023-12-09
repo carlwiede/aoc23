@@ -1,5 +1,5 @@
-include("../ReadString.jl")
-lines = ReadString.read_input()
+include("../ReadFile.jl")
+lines = ReadFile.read_input()
 
 function part1(input::Vector{String})::Int
     directions = filter(d -> d != '\r', input[1])

@@ -1,5 +1,5 @@
-include("../ReadString.jl")
-lines = ReadString.read_input()
+include("../ReadFile.jl")
+lines = ReadFile.read_input()
 
 function value_of_line1(line)
     all_vals = [map(n -> parse(Int, n), split(line, " "))]

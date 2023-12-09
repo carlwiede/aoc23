@@ -1,4 +1,4 @@
-module ReadString
+module ReadFile
 
 export read_input
 
