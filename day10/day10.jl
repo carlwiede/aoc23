@@ -74,6 +74,8 @@ function part1(input::Vector{String})::Int
         p2 = next
         c2 += 1
     end
+
+    lines[s_y] = string(lines[s_y][1:s_x-1], 'S', lines[s_y][s_x+1:end])
     
     return max(c1, c2)
 end
@@ -188,5 +190,5 @@ function part2(input::Vector{String})::Int
 end
 
 # Don't run both at the same time x)
-#@show part1(lines)
+@show part1(lines)
 @show part2(lines)
