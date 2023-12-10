@@ -189,6 +189,5 @@ function part2(input::Vector{String})::Int
     return area
 end
 
-# Don't run both at the same time x)
 @show part1(lines)
 @show part2(lines)
