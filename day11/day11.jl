@@ -8,13 +8,7 @@ function solve(input, exp_mult)::Int
 
     # Get stars
     star_positions = []
-    for y in 1:length(input)
-        for x in 1:length(input[1])-1
-            if input[y][x] == '#'
-                push!(star_positions, (y, x, 0, 0))
-            end
-        end
-    end
+    foreach(y -> foreach(x -> input[y][x] == '#' && push!(star_positions, (y, x, 0, 0)),1:length(input[1])-1), 1:length(input))
 
     # Update expanded y positions
     foreach(y -> isempty(filter(p -> p[1] == y, star_positions)) && foreach(enum -> enum[2][1] > y && (star_positions[enum[1]] = (enum[2][1], enum[2][2], enum[2][3] + 1, enum[2][4])), enumerate(star_positions)), 1:length(lines))
