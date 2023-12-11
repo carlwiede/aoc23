@@ -17,26 +17,10 @@ function solve(input, exp_mult)::Int
     end
 
     # Update expanded y positions
-    for y in 1:length(input)
-        if isempty(filter(p -> p[1] == y, star_positions))
-            for (i, p) in enumerate(star_positions)
-                if p[1] > y
-                    star_positions[i] = (p[1], p[2], p[3] + 1, p[4])
-                end
-            end
-        end
-    end
-
+    foreach(y -> isempty(filter(p -> p[1] == y, star_positions)) && foreach(enum -> enum[2][1] > y && (star_positions[enum[1]] = (enum[2][1], enum[2][2], enum[2][3] + 1, enum[2][4])), enumerate(star_positions)), 1:length(lines))
+    
     # Update expanded x positions
-    for x in 1:length(input[1])-1
-        if isempty(filter(p -> p[2] == x, star_positions))
-            for (i, p) in enumerate(star_positions)
-                if p[2] > x
-                    star_positions[i] = (p[1], p[2], p[3], p[4] + 1)
-                end
-            end
-        end
-    end
+    foreach(x -> isempty(filter(p -> p[2] == x, star_positions)) && foreach(enum -> enum[2][2] > x && (star_positions[enum[1]] = (enum[2][1], enum[2][2], enum[2][3], enum[2][4] + 1)), enumerate(star_positions)), 1:length(lines[1])-1)
 
     # Calculate steps
     lengths = 0
