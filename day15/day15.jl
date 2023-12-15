@@ -13,25 +13,16 @@ end
 
 using OrderedCollections
 
-hashmap = OrderedDict{Int, OrderedDict{String, Int}}()
+hashmap = Dict{Int, OrderedDict{String, Int}}()
 
 function get_box_value(box_num)
-    box_value = 0
-    for (i, key) in enumerate(keys(hashmap[box_num]))
-        box_value += (box_num+1)*i*hashmap[box_num][key]
-    end
-    return box_value
+    !isempty(hashmap[box_num]) && return sum((box_num + 1) * i * hashmap[box_num][key] for (i, key) in enumerate(keys(hashmap[box_num])))
 end
 
 function update_boxes(box_num, hash_name, op, value)
-    if !(box_num in keys(hashmap))
-        hashmap[box_num] = OrderedDict{String, Int}()
-    end
-    if op == '='
-        hashmap[box_num][hash_name] = value        
-    else
-        delete!(hashmap[box_num], hash_name)
-    end
+    !(box_num in keys(hashmap)) && (hashmap[box_num] = OrderedDict{String, Int}())
+    op == '=' && (hashmap[box_num][hash_name] = value)
+    op == '-' && delete!(hashmap[box_num], hash_name)
 end
 
 function get_hash(str)
