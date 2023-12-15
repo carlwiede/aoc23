@@ -1,22 +1,11 @@
 include("../ReadFile.jl")
 lines = ReadFile.read_input()
 
-function get_hash(str)
-    current_value = 0
-    for c in str
-        current_value += Int(c)
-        current_value *= 17
-        current_value %= 256
-    end
-    return current_value
-end
-
 function part1(input::Vector{String})::Int
     strings = split(input[1], ",")
     strings[end] = string(strings[end][1:end-1]) # remove pesky \r, sheesh
-    
     mapreduce(
-        str -> get_hash(str),
+        str -> reduce((x, c) -> (x + Int(c)) * 17 % 256, str, init=0),
         +,
         strings
     )
@@ -45,7 +34,7 @@ function update_boxes(box_num, hash_name, op, value)
     end
 end
 
-function get_hash2(str)
+function get_hash(str)
     current_value = 0
     hash_name = ""
     for c in str
@@ -66,7 +55,7 @@ end
 function part2(input::Vector{String})::Int
     strings = split(input[1], ",")
     strings[end] = string(strings[end][1:end-1]) # remove pesky \r, sheesh
-    foreach(str -> get_hash2(str), strings)
+    foreach(str -> get_hash(str), strings)
     mapreduce(
         box_num -> get_box_value(box_num),
         +,
