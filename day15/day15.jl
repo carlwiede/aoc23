@@ -29,11 +29,8 @@ function get_hash(str)
     current_value = 0
     hash_name = ""
     for c in str
-        if c == '=' 
-            update_boxes(current_value, hash_name, c, parse(Int, str[end]))
-            return
-        elseif c == '-' 
-            update_boxes(current_value, hash_name, c, -1)
+        if c == '=' || c == '-'
+            update_boxes(current_value, hash_name, c, c == '=' ? parse(Int, str[end]) : -1)
             return
         end
         current_value += Int(c)
