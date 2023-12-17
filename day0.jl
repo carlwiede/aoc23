@@ -1,5 +1,4 @@
-include("../ReadFile.jl")
-lines = ReadFile.read_input()
+lines = readlines("input.txt")
 
 function part1(input::Vector{String})::Int
     return 0
