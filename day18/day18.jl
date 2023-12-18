@@ -84,8 +84,7 @@ function get_dir(num)
 end
 
 function get_area(corners)
-    x, y = zip(corners...)
-    return 0.5 * abs(sum(x[i]*y[i-1] - x[i-1]*y[i] for i in 2:1:length(x)))
+    return 0.5 * abs(sum(corners[i][1]*corners[i-1][2] - corners[i-1][1]*corners[i][2] for i in 2:1:length(corners)))
 end
 
 function get_inside(area, border_len)
