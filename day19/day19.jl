@@ -39,7 +39,7 @@ function process_part(workflow, part)
         var, op, val, dest = condition
         if var == "" # Last condition 
             returnage = process_part(dest, part)
-            break
+            break;
         end
         if op == '<'
             if part[var] < val
@@ -76,8 +76,49 @@ function part1(input::Vector{String})::Int
     return total
 end
 
+possible::Vector{Any} = []
+
+function check(workflow, combs)
+    workflow == "R" && return
+    workflow == "A" && (push!(possible, combs); return)
+    for cond in workflows[workflow]
+        var, op, val, dest = cond
+        var == "" && (check(dest, combs); return)
+        if op == '<'
+            if combs[var][1] < val
+                bababooey = deepcopy(combs)
+                bababooey[var] = (bababooey[var][1], min(bababooey[var][2], val-1))
+                check(dest, bababooey)
+                if combs[var][2] >= val
+                    combs[var] = (val, combs[var][2])
+                else
+                    return
+                end
+            end
+        else
+            if combs[var][2] > val
+                bababooey = deepcopy(combs)
+                bababooey[var] = (max(val+1, bababooey[var][1]), bababooey[var][2])
+                check(dest, bababooey)
+                if combs[var][1] <= val
+                    combs[var] = (combs[var][1], val)
+                else
+                    return
+                end
+            end
+        end
+    end
+end
+
 function part2(input::Vector{String})::Int
-    return 0
+    combinations = Dict{}('x' => (1, 4000), 'm' => (1, 4000), 'a' => (1, 4000), 's' => (1, 4000))
+    check("in", combinations)
+    total = 0
+    for d in possible
+        x, m, a, s = d['x'], d['m'], d['a'], d['s']
+        total += (x[2]-x[1]+1)*(m[2]-m[1]+1)*(a[2]-a[1]+1)*(s[2]-s[1]+1)
+    end
+    return total
 end
 
 @show part1(lines)
