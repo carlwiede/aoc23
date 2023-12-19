@@ -1,5 +1,4 @@
-include("../ReadFile.jl")
-lines = ReadFile.read_input()
+lines = readlines("input.txt")
 
 function get_filtered_line1(line)
     return map(x -> parse(Int, x), filter(c -> c != "", split(last(split(line, ":")), " ")))

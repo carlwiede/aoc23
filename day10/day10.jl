@@ -1,5 +1,4 @@
-include("../ReadFile.jl")
-lines::Vector{String} = ReadFile.read_input()
+lines = readlines("input.txt")
 
 function get_connections(pos)
     poses = ((0,0),(0,0))

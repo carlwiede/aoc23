@@ -1,5 +1,4 @@
-include("../ReadFile.jl")
-lines = ReadFile.read_input()
+lines = readlines("input.txt")
 
 maxnums = [("red", 12), ("green", 13), ("blue", 14)]
 

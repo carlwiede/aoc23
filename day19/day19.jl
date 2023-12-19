@@ -114,6 +114,7 @@ function part2(input::Vector{String})::Int
     combinations = Dict{}('x' => (1, 4000), 'm' => (1, 4000), 'a' => (1, 4000), 's' => (1, 4000))
     check("in", combinations)
     total = 0
+    @show possible
     for d in possible
         x, m, a, s = d['x'], d['m'], d['a'], d['s']
         total += (x[2]-x[1]+1)*(m[2]-m[1]+1)*(a[2]-a[1]+1)*(s[2]-s[1]+1)

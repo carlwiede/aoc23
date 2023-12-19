@@ -1,5 +1,4 @@
-include("../ReadFile.jl")
-lines = ReadFile.read_input()
+lines = readlines("input.txt")
 
 function get_matches_for_card(card)::Int
     numbers = split(card, ":")[2]

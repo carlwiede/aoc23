@@ -1,9 +1,8 @@
-include("../ReadFile.jl")
-lines = ReadFile.read_input()
+lines = readlines("input.txt")
 
 function part1(input::Vector{String})::Int
     
-    char_array = [filter(c -> c != '\r', collect(str)) for str in input]
+    char_array = [filter(c -> c != ' ', collect(str)) for str in input] # yeah idk I just removed the \r check and put space instead
 
     # Tilt north
     for x in 1:1:length(char_array[1])
@@ -45,7 +44,7 @@ function part2(input::Vector{String})::Int
     
     for i in start_cycles:end_cycles
 
-        char_array = [filter(c -> c != '\r', collect(str)) for str in input]
+        char_array = [filter(c -> c != ' ', collect(str)) for str in input] # yeah idk I just removed the \r check and put space instead
         cycles = i
 
         for _ in 1:1:cycles

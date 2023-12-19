@@ -1,5 +1,4 @@
-include("../ReadFile.jl")
-lines = ReadFile.read_input()
+lines = readlines("input.txt")
 
 function part1(input::Vector{String})::Int
     # Create get seeds
@@ -9,10 +8,10 @@ function part1(input::Vector{String})::Int
     tables = []
     map_counter = 0
     for line in input[2:end]
-        if length(line) == 1
+        if length(line) == 0
             push!(tables, [])
             map_counter += 1
-        elseif endswith(line, "map:\r")
+        elseif endswith(line, "map:")
         else
             # Crunch numbers
             push!(tables[map_counter], map(x->parse(Int, x), split(line, " ")))
@@ -70,10 +69,10 @@ function part2(input::Vector{String})::Int
         tables = []
         map_counter = 0
         for line in input[2:end]
-            if length(line) == 1
+            if length(line) == 0
                 push!(tables, [])
                 map_counter += 1
-            elseif !endswith(line, "map:\r")
+            elseif !endswith(line, "map:")
                 push!(tables[map_counter], map(x->parse(Int, x), split(line, " ")))
             end
         end

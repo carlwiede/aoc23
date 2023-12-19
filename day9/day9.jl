@@ -1,5 +1,4 @@
-include("../ReadFile.jl")
-lines = ReadFile.read_input()
+lines = readlines("input.txt")
 
 function get_graph(line)
     all_vals = [map(n -> parse(Int, n), split(line, " "))]

@@ -1,5 +1,4 @@
-include("../ReadFile.jl")
-lines = ReadFile.read_input()
+lines = readlines("input.txt")
 
 function solve(input, exp_mult)::Int
 
@@ -8,7 +7,7 @@ function solve(input, exp_mult)::Int
 
     # Get stars
     star_positions = []
-    foreach(y -> foreach(x -> input[y][x] == '#' && push!(star_positions, (y, x, 0, 0)),1:length(input[1])-1), 1:length(input))
+    foreach(y -> foreach(x -> input[y][x] == '#' && push!(star_positions, (y, x, 0, 0)),1:length(input[1])), 1:length(input))
 
     # Update expanded y positions
     foreach(y -> isempty(filter(p -> p[1] == y, star_positions)) && foreach(enum -> enum[2][1] > y && (star_positions[enum[1]] = (enum[2][1], enum[2][2], enum[2][3] + 1, enum[2][4])), enumerate(star_positions)), 1:length(lines))

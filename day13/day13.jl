@@ -1,5 +1,6 @@
-include("../ReadFile.jl")
-lines = ReadFile.read_input()
+lines = readlines("input.txt")
+
+# NOTE: You need two empty lines after the last grid in the input
 
 function assert_mirror(grid, start, stop)::Int
     potential_value = start
@@ -36,7 +37,7 @@ function part1(input::Vector{String})::Int
 
     # Check vertically
     for i in eachindex(grids)
-        vert_grid = [join(chars) for chars in zip(grids[i]...)][1:end-1]
+        vert_grid = [join(chars) for chars in zip(grids[i]...)]
         for j in 1:length(vert_grid)-1
             if vert_grid[j] == vert_grid[j+1]
                 val = assert_mirror(vert_grid, j, j+1)
@@ -102,7 +103,7 @@ function part2(input::Vector{String})::Int
     end
 
     for i in eachindex(grids)
-        vert_grid = [join(chars) for chars in zip(grids[i]...)][1:end-1]
+        vert_grid = [join(chars) for chars in zip(grids[i]...)]
         for j in length(vert_grid)-1:-1:1
             diff = hamming(vert_grid[j], vert_grid[j+1])
             if diff in [0,1]

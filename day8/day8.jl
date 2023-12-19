@@ -1,8 +1,6 @@
-include("../ReadFile.jl")
-lines = ReadFile.read_input()
+lines = readlines("input.txt")
 
 function part1(input::Vector{String})::Int
-    directions = filter(d -> d != '\r', input[1])
     nodes = Dict{}()
 
     for line in input[3:end]
@@ -13,7 +11,7 @@ function part1(input::Vector{String})::Int
     steps = 0
 
     while current_node != "ZZZ"
-        for d in directions
+        for d in input[1]
             if current_node == "ZZZ"
                 break
             end
@@ -26,7 +24,6 @@ function part1(input::Vector{String})::Int
 end
 
 function part2(input::Vector{String})::Int
-    directions = filter(d -> d != '\r', input[1])
     nodes = Dict{String, Tuple{String, String}}()
 
     for line in input[3:end]
@@ -38,7 +35,7 @@ function part2(input::Vector{String})::Int
     for node in current_nodes
         steps = 0
         while !endswith(node, "Z")
-            for d in directions
+            for d in input[1]
                 if endswith(node, "Z")
                     break
                 end
