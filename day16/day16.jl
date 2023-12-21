@@ -1,7 +1,6 @@
-include("../ReadFile.jl")
-lines = ReadFile.read_input()
+lines = readlines("input.txt")
 
-grid = map(line -> line = filter(c -> c != '\r', line), lines);
+grid = lines;
 
 @enum Direction up right down left
 

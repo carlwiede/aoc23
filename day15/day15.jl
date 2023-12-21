@@ -1,9 +1,7 @@
-include("../ReadFile.jl")
-lines = ReadFile.read_input()
+lines = readlines("input.txt")
 
 function part1(input::Vector{String})::Int
     strings = split(input[1], ",")
-    strings[end] = string(strings[end][1:end-1]) # remove pesky \r, sheesh
     mapreduce(
         str -> reduce((x, c) -> (x + Int(c)) * 17 % 256, str, init=0),
         +,
@@ -42,7 +40,6 @@ end
 
 function part2(input::Vector{String})::Int
     strings = split(input[1], ",")
-    strings[end] = string(strings[end][1:end-1]) # remove pesky \r, sheesh
     foreach(str -> get_hash(str), strings)
     mapreduce(
         box_num -> get_box_value(box_num),
