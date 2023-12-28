@@ -52,8 +52,61 @@ function part1(input::Vector{String})::Int
 end
 
 function part2(input::Vector{String})::Int
+
+    hs::Vector{Tuple{Vector{Int}, Vector{Int}}} = []
+    for line in input
+        position, velocity = split(line, " @ ")
+        push!(hs, (map(x -> parse(Int, x), split(position, ", ")), map(x -> parse(Int, x), split(velocity, ", "))))
+    end
+
+    n = length(hs)
+    m = min(n, 10)
+    b = [hs[i][1][1] - hs[i%m + 1][1][1] for i in 1:m]
+    b[m] = hs[m][1][2] - hs[1][1][2]
+
+    bound1 = 500
+    bound2 = 0
+
+    for vxs in [-bound1:bound2, bound2:bound1], vys in [-bound1:bound2, bound2:bound1]
+        for vx in vxs, vy in vys
+            arr = zeros(m,m)
+            for i in 1:m-1
+                arr[i, i] = vx - hs[i][2][1]
+                arr[i, i%m + 1] = hs[i%m + 1][2][1] - vx
+            end
+
+            arr[m, m] = vy - hs[m][2][2]
+            arr[m, 1] = hs[1][2][2] - vy
+
+            try
+                t = arr\b
+
+                vz = (hs[1][1][3] - hs[2][1][3] + t[1] * hs[1][2][3] - t[2] * hs[2][2][3]) / (t[1] - t[2])
+
+                bababooey = true
+
+                for i in 2:m
+                    vz2 = (hs[i][1][3] - hs[i%m + 1][1][3] + t[i] * hs[i][2][3] - t[i%m + 1] * hs[i%m + 1][2][3]) / (t[i] - t[i%m + 1])
+                    bababooey &= vz ≈ vz2
+                    if !bababooey
+                        break
+                    end
+                end
+
+                if bababooey
+                    px = hs[1][1][1] + t[1] * (hs[1][2][1] - vx)
+                    py = hs[1][1][2] + t[1] * (hs[1][2][2] - vy)
+                    pz = hs[1][1][3] + t[1] * (hs[1][2][3] - vz)
+
+                    return round(px+py+pz)
+                end
+            catch _
+            end
+        end
+    end
+
     return 0
 end
 
-@show part1(lines)
+#@show part1(lines)
 @show part2(lines)
