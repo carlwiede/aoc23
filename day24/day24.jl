@@ -55,8 +55,10 @@ function part2(input::Vector{String})::Int
 
     hs::Vector{Tuple{Vector{Int}, Vector{Int}}} = []
     for line in input
-        position, velocity = split(line, " @ ")
-        push!(hs, (map(x -> parse(Int, x), split(position, ", ")), map(x -> parse(Int, x), split(velocity, ", "))))
+        p, v = split(line, " @ ")
+        p = split(p, ", ") .|> val -> parse(Int, val)
+        v = split(v, ", ") .|> val -> parse(Int, val)
+        push!(hs, (p, v))
     end
 
     n = length(hs)
